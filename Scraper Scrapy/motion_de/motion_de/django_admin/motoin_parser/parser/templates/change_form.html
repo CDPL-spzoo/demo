@@ -1,0 +1,36 @@
+{% extends "admin/change_form.html" %}
+
+{% block after_field_sets %}
+  <script>
+    window.addEventListener('load',
+      function() {
+          const status = document.querySelector('#id_status')
+          const buttons = document.querySelectorAll('.submit-row input[type=\'submit\']');
+          const stopDisabling = () => {
+            buttons.forEach((button) => {
+                if (button.value != "Остановить парсинг"){
+                button.removeAttribute('disabled');
+                button.value = 'Сохранить';
+                }
+              })
+            status.value = "status3"
+          }
+          buttons.forEach((button) => {
+              if (status.value == "status4") {
+                if (button.value == "Сохранить и продолжить редактирование"){
+                  button.value = "Остановить парсинг"
+                  button.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        stopDisabling();
+                  })
+                }
+                else {
+                button.setAttribute('disabled', 'disabled');
+                button.value = 'Сохранение...';
+                  }
+                }
+
+          });
+    });
+  </script>
+{% endblock %}
